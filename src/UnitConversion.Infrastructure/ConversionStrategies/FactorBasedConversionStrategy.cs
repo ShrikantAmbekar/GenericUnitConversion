@@ -24,7 +24,7 @@ public sealed class FactorBasedConversionStrategy : IConversionStrategy
 
     private void ValidateValue(decimal value, UnitDefinition toUnit)
     {
-        if (_category is ConversionCategory.Length or ConversionCategory.Weight && value < 0)
+        if (_category is ConversionCategory.Length or ConversionCategory.Weight or ConversionCategory.Volume && value < 0)
         {
             throw new InvalidConversionValueException(
                 $"Negative values are not valid for {_category.ToString().ToLowerInvariant()} conversions.");

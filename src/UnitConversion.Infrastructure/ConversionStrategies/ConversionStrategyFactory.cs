@@ -14,7 +14,8 @@ public sealed class ConversionStrategyFactory : IConversionStrategyFactory
         {
             [ConversionCategory.Length] = new FactorBasedConversionStrategy(ConversionCategory.Length),
             [ConversionCategory.Weight] = new FactorBasedConversionStrategy(ConversionCategory.Weight),
-            [ConversionCategory.Temperature] = new TemperatureConversionStrategy()
+            [ConversionCategory.Temperature] = new TemperatureConversionStrategy(),
+            [ConversionCategory.Volume] = new FactorBasedConversionStrategy(ConversionCategory.Volume)
         };
     }
 

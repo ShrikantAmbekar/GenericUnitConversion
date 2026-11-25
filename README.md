@@ -1,13 +1,13 @@
 # Generic Unit Conversion API
 
-RESTful **ASP.NET Core** Web API that converts numerical values between measurement units for **length**, **weight/mass**, and **temperature**.
+RESTful **ASP.NET Core** Web API that converts numerical values between measurement units for **length**, **weight/mass**, **temperature**, and **volume**.
 
 Repository: [github.com/ShrikantAmbekar/GenericUnitConversion](https://github.com/ShrikantAmbekar/GenericUnitConversion)
 
 ## Features
 
 - Versioned REST API (`/api/v1`)
-- Categories: length, weight, temperature (extensible design)
+- Categories: length, weight, temperature, volume (extensible design)
 - Case-insensitive unit codes
 - Swagger / OpenAPI in Development
 - Layered architecture with dependency injection
@@ -34,17 +34,19 @@ Examples aligned with the technical challenge:
 
 | Category | Example |
 |----------|---------|
-| Length | meter ↔ feet, kilometer ↔ mile |
+| Length | meter ↔ feet, centimeter ↔ meter, kilometer ↔ mile |
 | Temperature | celsius ↔ fahrenheit, celsius ↔ kelvin |
 | Weight | kilogram ↔ pound, gram ↔ ounce |
+| Volume | liter ↔ milliliter |
 
 ### Unit catalog
 
 | Category | Units |
 |----------|-------|
-| Length | `meter`, `kilometer`, `feet`, `inch`, `mile` |
+| Length | `meter`, `kilometer`, `feet`, `inch`, `mile`, `centimeter` |
 | Weight | `kilogram`, `gram`, `pound`, `ounce` |
 | Temperature | `celsius`, `fahrenheit`, `kelvin` |
+| Volume | `liter`, `milliliter` |
 
 ## Prerequisites
 
@@ -68,7 +70,7 @@ dotnet run --project src/UnitConversion.Api
 |--------|------|-------------|
 | POST | `/api/v1/conversions` | Convert between two units (required by challenge) |
 | GET | `/api/v1/units` | List all supported units |
-| GET | `/api/v1/units/{category}` | Units for `Length`, `Weight`, or `Temperature` |
+| GET | `/api/v1/units/{category}` | Units for `Length`, `Weight`, `Temperature`, or `Volume` |
 
 ### Request example
 

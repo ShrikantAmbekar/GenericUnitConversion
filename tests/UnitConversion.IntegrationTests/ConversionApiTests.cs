@@ -78,7 +78,38 @@ public sealed class ConversionApiTests
 
         var units = await response.Content.ReadFromJsonAsync<List<UnitResponse>>();
         Assert.That(units, Is.Not.Null);
-        Assert.That(units!.Count, Is.GreaterThanOrEqualTo(12));
+        Assert.That(units!.Count, Is.GreaterThanOrEqualTo(15));
+    }
+
+    [Test]
+    public async Task PostConversion_CentimeterToMeter_ReturnsOk()
+    {
+        var response = await _client.PostAsJsonAsync("/api/v1/conversions", new
+        {
+            value = 100m,
+            fromUnit = "centimeter",
+            toUnit = "meter"
+        });
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var body = await response.Content.ReadFromJsonAsync<ConversionResponse>();
+        Assert.That(body!.ConvertedValue, Is.EqualTo(1m));
+    }
+
+    [Test]
+    public async Task PostConversion_MilliliterToLiter_ReturnsOk()
+    {
+        var response = await _client.PostAsJsonAsync("/api/v1/conversions", new
+        {
+            value = 2500m,
+            fromUnit = "milliliter",
+            toUnit = "liter"
+        });
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var body = await response.Content.ReadFromJsonAsync<ConversionResponse>();
+        Assert.That(body!.ConvertedValue, Is.EqualTo(2.5m));
+        Assert.That(body.Category, Is.EqualTo("Volume"));
     }
 
     [Test]
@@ -89,5 +120,15 @@ public sealed class ConversionApiTests
 
         var units = await response.Content.ReadFromJsonAsync<List<UnitResponse>>();
         Assert.That(units, Has.Count.EqualTo(3));
+    }
+
+    [Test]
+    public async Task GetUnitsByCategory_Volume_ReturnsFilteredList()
+    {
+        var response = await _client.GetAsync("/api/v1/units/Volume");
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var units = await response.Content.ReadFromJsonAsync<List<UnitResponse>>();
+        Assert.That(units, Has.Count.EqualTo(2));
     }
 }

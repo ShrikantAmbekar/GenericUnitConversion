@@ -78,6 +78,36 @@ public sealed class ConversionStrategiesTests
     }
 
     [Test]
+    public void LengthStrategy_CentimeterToMeter_ReturnsExpected()
+    {
+        var strategy = new FactorBasedConversionStrategy(ConversionCategory.Length);
+        var cm = Unit("centimeter", ConversionCategory.Length, 0.01m);
+        var meter = Unit("meter", ConversionCategory.Length, 1m);
+
+        Assert.That(strategy.Convert(100m, cm, meter), Is.EqualTo(1m));
+    }
+
+    [Test]
+    public void VolumeStrategy_MilliliterToLiter_ReturnsExpected()
+    {
+        var strategy = new FactorBasedConversionStrategy(ConversionCategory.Volume);
+        var ml = Unit("milliliter", ConversionCategory.Volume, 0.001m);
+        var liter = Unit("liter", ConversionCategory.Volume, 1m);
+
+        Assert.That(strategy.Convert(1000m, ml, liter), Is.EqualTo(1m));
+    }
+
+    [Test]
+    public void VolumeStrategy_NegativeValue_Throws()
+    {
+        var strategy = new FactorBasedConversionStrategy(ConversionCategory.Volume);
+        var liter = Unit("liter", ConversionCategory.Volume, 1m);
+
+        Assert.Throws<InvalidConversionValueException>(() =>
+            strategy.Convert(-1m, liter, liter));
+    }
+
+    [Test]
     public void LengthStrategy_NegativeValue_Throws()
     {
         var strategy = new FactorBasedConversionStrategy(ConversionCategory.Length);
