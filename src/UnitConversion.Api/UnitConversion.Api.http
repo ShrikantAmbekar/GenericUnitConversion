@@ -1,0 +1,17 @@
+@UnitConversion.Api_HostAddress = https://localhost:7240
+
+### Convert length
+POST {{UnitConversion.Api_HostAddress}}/api/v1/conversions
+Content-Type: application/json
+
+{
+  "value": 10,
+  "fromUnit": "meter",
+  "toUnit": "feet"
+}
+
+### List all units
+GET {{UnitConversion.Api_HostAddress}}/api/v1/units
+
+### Units by category
+GET {{UnitConversion.Api_HostAddress}}/api/v1/units/Temperature
