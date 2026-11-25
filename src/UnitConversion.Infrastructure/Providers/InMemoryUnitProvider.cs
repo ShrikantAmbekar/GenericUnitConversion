@@ -29,6 +29,7 @@ public sealed class InMemoryUnitProvider : IUnitProvider
         new UnitDefinition { Code = "feet", Name = "Feet", Category = ConversionCategory.Length, ConversionFactor = 0.3048m },
         new UnitDefinition { Code = "inch", Name = "Inch", Category = ConversionCategory.Length, ConversionFactor = 0.0254m },
         new UnitDefinition { Code = "mile", Name = "Mile", Category = ConversionCategory.Length, ConversionFactor = 1609.344m },
+        new UnitDefinition { Code = "centimeter", Name = "Centimeter", Category = ConversionCategory.Length, ConversionFactor = 0.01m },
 
         new UnitDefinition { Code = "kilogram", Name = "Kilogram", Category = ConversionCategory.Weight, ConversionFactor = 1m },
         new UnitDefinition { Code = "gram", Name = "Gram", Category = ConversionCategory.Weight, ConversionFactor = 0.001m },
@@ -37,6 +38,9 @@ public sealed class InMemoryUnitProvider : IUnitProvider
 
         new UnitDefinition { Code = "celsius", Name = "Celsius", Category = ConversionCategory.Temperature, ConversionFactor = 0m },
         new UnitDefinition { Code = "fahrenheit", Name = "Fahrenheit", Category = ConversionCategory.Temperature, ConversionFactor = 0m },
-        new UnitDefinition { Code = "kelvin", Name = "Kelvin", Category = ConversionCategory.Temperature, ConversionFactor = 0m }
+        new UnitDefinition { Code = "kelvin", Name = "Kelvin", Category = ConversionCategory.Temperature, ConversionFactor = 0m },
+
+        new UnitDefinition { Code = "liter", Name = "Liter", Category = ConversionCategory.Volume, ConversionFactor = 1m },
+        new UnitDefinition { Code = "milliliter", Name = "Milliliter", Category = ConversionCategory.Volume, ConversionFactor = 0.001m }
     ];
 }

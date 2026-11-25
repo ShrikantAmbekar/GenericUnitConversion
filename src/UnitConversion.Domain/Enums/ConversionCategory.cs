@@ -4,5 +4,6 @@ public enum ConversionCategory
 {
     Length,
     Weight,
-    Temperature
+    Temperature,
+    Volume
 }

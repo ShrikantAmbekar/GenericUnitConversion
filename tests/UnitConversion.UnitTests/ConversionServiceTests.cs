@@ -63,7 +63,30 @@ public sealed class ConversionServiceTests
     {
         var units = _service.GetUnitsByCategory("Length");
 
-        Assert.That(units, Has.Count.EqualTo(5));
+        Assert.That(units, Has.Count.EqualTo(6));
         Assert.That(units.All(u => u.Category == "Length"), Is.True);
+    }
+
+    [Test]
+    public void GetUnitsByCategory_Volume_ReturnsUnits()
+    {
+        var units = _service.GetUnitsByCategory("Volume");
+
+        Assert.That(units, Has.Count.EqualTo(2));
+        Assert.That(units.All(u => u.Category == "Volume"), Is.True);
+    }
+
+    [Test]
+    public void Convert_CentimeterToMeter_ReturnsExpected()
+    {
+        var result = _service.Convert(new ConversionRequest
+        {
+            Value = 100m,
+            FromUnit = "centimeter",
+            ToUnit = "meter"
+        });
+
+        Assert.That(result.ConvertedValue, Is.EqualTo(1m));
+        Assert.That(result.Category, Is.EqualTo("Length"));
     }
 }
