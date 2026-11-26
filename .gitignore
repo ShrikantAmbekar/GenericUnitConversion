@@ -7,6 +7,9 @@ obj/
 TestResults/
 *.DotSettings.user
 
+## Logs
+logs/
+
 ## IDE
 .idea/
 *.swp

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using UnitConversion.Application.DTOs;
 using UnitConversion.Application.Services;
 using UnitConversion.Domain.Enums;
@@ -17,7 +18,7 @@ public sealed class ConversionServiceTests
     {
         var provider = new InMemoryUnitProvider();
         var factory = new ConversionStrategyFactory();
-        _service = new ConversionService(provider, factory);
+        _service = new ConversionService(provider, factory, NullLogger<ConversionService>.Instance);
     }
 
     [Test]
