@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using UnitConversion.Application.DTOs;
 using UnitConversion.Application.Interfaces;
 using UnitConversion.Domain.Entities;
@@ -10,11 +11,16 @@ public sealed class ConversionService : IConversionService
 {
     private readonly IUnitProvider _unitProvider;
     private readonly IConversionStrategyFactory _strategyFactory;
+    private readonly ILogger<ConversionService> _logger;
 
-    public ConversionService(IUnitProvider unitProvider, IConversionStrategyFactory strategyFactory)
+    public ConversionService(
+        IUnitProvider unitProvider,
+        IConversionStrategyFactory strategyFactory,
+        ILogger<ConversionService> logger)
     {
         _unitProvider = unitProvider;
         _strategyFactory = strategyFactory;
+        _logger = logger;
     }
 
     public ConversionResponse Convert(ConversionRequest request)
@@ -29,13 +35,16 @@ public sealed class ConversionService : IConversionService
 
         if (string.Equals(fromUnit.Code, toUnit.Code, StringComparison.OrdinalIgnoreCase))
         {
-            return BuildResponse(request.Value, fromUnit, toUnit, request.Value);
+            var sameUnitResponse = BuildResponse(request.Value, fromUnit, toUnit, request.Value);
+            LogSuccessfulConversion(sameUnitResponse);
+            return sameUnitResponse;
         }
 
         var strategy = _strategyFactory.GetStrategy(fromUnit.Category);
         var converted = strategy.Convert(request.Value, fromUnit, toUnit);
-
-        return BuildResponse(request.Value, fromUnit, toUnit, converted);
+        var response = BuildResponse(request.Value, fromUnit, toUnit, converted);
+        LogSuccessfulConversion(response);
+        return response;
     }
 
     public IReadOnlyList<UnitResponse> GetAllUnits() =>
@@ -49,6 +58,17 @@ public sealed class ConversionService : IConversionService
         }
 
         return _unitProvider.GetUnitsByCategory(parsed).Select(MapUnit).ToList();
+    }
+
+    private void LogSuccessfulConversion(ConversionResponse response)
+    {
+        _logger.LogInformation(
+            "Conversion succeeded: {OriginalValue} {FromUnit} -> {ConvertedValue} {ToUnit} ({Category})",
+            response.OriginalValue,
+            response.FromUnit,
+            response.ConvertedValue,
+            response.ToUnit,
+            response.Category);
     }
 
     private UnitDefinition ResolveUnit(string unitCode)

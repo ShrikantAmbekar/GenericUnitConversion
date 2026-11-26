@@ -14,6 +14,7 @@ Repository: [github.com/ShrikantAmbekar/GenericUnitConversion](https://github.co
 - Strategy-based conversion engine and in-memory unit catalog
 - FluentValidation for request input
 - Global exception handling with consistent JSON errors
+- Serilog file logging for successful and failed requests
 - NUnit unit and integration tests
 - GitHub Actions CI (`.github/workflows/dotnet-ci.yml`)
 
@@ -24,6 +25,7 @@ Repository: [github.com/ShrikantAmbekar/GenericUnitConversion](https://github.co
 | Framework | ASP.NET Core Web API, **.NET 9** |
 | Language | C# |
 | Validation | FluentValidation |
+| Logging | Serilog (console + daily rolling file) |
 | API docs | Swashbuckle (Swagger) |
 | Testing | NUnit, Moq, `WebApplicationFactory` |
 | CI | GitHub Actions, `actions/setup-dotnet@v4` |
@@ -63,6 +65,10 @@ dotnet run --project src/UnitConversion.Api
 ```
 
 **Swagger UI (Development):** `https://localhost:<port>/swagger` (port shown in console / `launchSettings.json`).
+
+### Logging
+
+Serilog writes **console** and **daily rolling file** logs under `logs/unit-conversion-YYYYMMDD.log` (retained for 14 days). Successful conversions are logged at Information; failed requests are logged as Warning/Error by the exception middleware and request logging. The `logs/` folder is gitignored.
 
 ## API endpoints
 
